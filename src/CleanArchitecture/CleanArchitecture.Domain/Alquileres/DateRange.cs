@@ -9,7 +9,7 @@ public sealed record DateRange
 
     public DateOnly Inicio {get; init;}
     public DateOnly Fin {get; init;}
-    public int DantidadDias => Fin.DayNumber - Inicio.DayNumber;
+    public int CantidadDias => Fin.DayNumber - Inicio.DayNumber;
 
     public static DateRange Create(DateOnly inicio, DateOnly fin)
     {
