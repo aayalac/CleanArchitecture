@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres.Events;
 using CleanArchitecture.Domain.Vehiculos;
@@ -68,11 +67,22 @@ public sealed class Alquiler : Entity
             AlquilerStatus.Reservado,
             fechaCreacion
         );
-
+        
         alquiler.RaiseDomainEvent(new AlquilerReservadoDomainEvent(alquiler.Id!));
 
         vehiculo.FechaUltimaAlquiler = fechaCreacion;
 
         return alquiler;
     }
+
+    public Result Confirmar(DateTime utcNow)
+        {
+            if(Status != AlquilerStatus.Reservado)
+            {
+                
+            }
+
+            return Result.Success();
+        }
+
 }
