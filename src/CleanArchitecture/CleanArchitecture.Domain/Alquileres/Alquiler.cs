@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres.Events;
 using CleanArchitecture.Domain.Vehiculos;
@@ -79,10 +80,44 @@ public sealed class Alquiler : Entity
         {
             if(Status != AlquilerStatus.Reservado)
             {
-                
+                return Result.Failure(AlquilerErrors.NotReserved);
             }
+            Status = AlquilerStatus.Confirmado;
+            FechaConfirmacion = utcNow;
+            RaiseDomainEvent(new AlquilerConfirmadoDomainEvent(Id));
 
             return Result.Success();
         }
 
+    public Result Rechazar(DateTime utcNow)
+    {
+        if(Status != AlquilerStatus.Reservado)
+        {
+            return Result.Failure(AlquilerErrors.NotReserved);
+        }
+        Status = AlquilerStatus.Rechazado;
+        FechaDenegacion = utcNow;
+        RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id));
+
+        return Result.Success();
+    }
+
+    public Result Cancelar(DateTime utcNow)
+    {
+        if(Status != AlquilerStatus.Confirmado)
+        {
+            return Result.Failure(AlquilerErrors.NotConfirmado);
+        }
+        var currentDate = DateOnly.FromDateTime(utcNow);
+
+        if(currentDate > Duracion!.Inicio)
+        {
+            return Result.Failure(AlquilerErrors.AlreadyStarted);
+        }
+        Status = AlquilerStatus.Cancelado;
+        FechaCancelacion = utcNow;
+        RaiseDomainEvent(new AlquilerCanceladoDomainEvent(Id));
+
+        return Result.Success();
+    }
 }
