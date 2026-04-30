@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArchitecture", "CleanA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain", "src\CleanArchitecture\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{580EB502-42EE-4D54-A1AF-CF68F99C0DFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application", "src\CleanArchitecture\CleanArchitecture.Application\CleanArchitecture.Application.csproj", "{B72051DE-CEBA-49B8-982F-377E70A0C58E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,9 +24,14 @@ Global
 		{580EB502-42EE-4D54-A1AF-CF68F99C0DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{580EB502-42EE-4D54-A1AF-CF68F99C0DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{580EB502-42EE-4D54-A1AF-CF68F99C0DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72051DE-CEBA-49B8-982F-377E70A0C58E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72051DE-CEBA-49B8-982F-377E70A0C58E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72051DE-CEBA-49B8-982F-377E70A0C58E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72051DE-CEBA-49B8-982F-377E70A0C58E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6B3B470A-4FAC-465F-A436-24819C0A57AB} = {88DC3111-D5B4-41A9-A07F-BD1CFA6F6AE9}
 		{580EB502-42EE-4D54-A1AF-CF68F99C0DFD} = {6B3B470A-4FAC-465F-A436-24819C0A57AB}
+		{B72051DE-CEBA-49B8-982F-377E70A0C58E} = {6B3B470A-4FAC-465F-A436-24819C0A57AB}
 	EndGlobalSection
 EndGlobal
