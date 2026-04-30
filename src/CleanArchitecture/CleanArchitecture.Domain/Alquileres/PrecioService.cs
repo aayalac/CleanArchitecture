@@ -1,3 +1,4 @@
+using CleanArchitecture.Domain.Shared;
 using CleanArchitecture.Domain.Vehiculos;
 
 namespace CleanArchitecture.Domain.Alquileres;
@@ -42,7 +43,8 @@ public class PrecioService
 
         precioTotal += accesorioCharges;
 
-        return new PrecioDetalle(precioPorPeriodo,
+        return new PrecioDetalle(
+        precioPorPeriodo,
         vehiculo.Mantenimiento!,
         accesorioCharges,
         precioTotal);
