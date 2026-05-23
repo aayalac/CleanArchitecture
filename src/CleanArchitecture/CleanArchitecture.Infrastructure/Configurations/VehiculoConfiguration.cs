@@ -31,7 +31,7 @@ internal sealed class VehiculoConfiguration : IEntityTypeConfiguration<Vehiculo>
         builder.OwnsOne(vehiculo => vehiculo.Mantenimiento, priceBuilder =>
         {
             priceBuilder.Property(moneda => moneda.TipoMoneda)
-                .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
+            .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
         });
     }
 }
