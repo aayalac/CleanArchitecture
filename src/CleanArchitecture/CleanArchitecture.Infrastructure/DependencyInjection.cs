@@ -1,5 +1,6 @@
 using CleanArchitecture.Application.Abstractions.Clock;
 using CleanArchitecture.Application.Abstractions.Email;
+using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres;
 using CleanArchitecture.Domain.Users;
 using CleanArchitecture.Domain.Vehiculos;
@@ -32,6 +33,8 @@ public static class DependencyInyection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IVehiculoRepository, VehiculoRepository>();
         services.AddScoped<IAlquilerRepository, AlquilerRepository>();
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         return services;
     }
