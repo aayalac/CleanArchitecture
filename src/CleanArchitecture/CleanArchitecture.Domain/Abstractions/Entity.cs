@@ -15,7 +15,7 @@ public abstract class Entity
         return _domainEvent.ToList();
     }
 
-    public void CrearDomainEvents()
+    public void ClearDomainEvents()
     {
         _domainEvent.Clear();
     }
