@@ -17,4 +17,12 @@ Este proyecto implementa una **arquitectura de software limpia** combinada con p
 - ✅ **Código modular**: Fácil de mantener, probar y extender
 - ✅ **Desacoplamiento**: Bajo acoplamiento entre capas mediante patrones SOLID
 
+## 📚 Documentación
+
+Para información detallada, consulta la carpeta [`docs/`](./docs/):
+
+- [Arquitectura](./docs/architecture.md) - Estructura y patrones del sistema
+- [Modelo de Dominio](./docs/domain.md) - Entidades, value objects y eventos
+- [Flujos Principales](./docs/workflows.md) - Casos de uso y procesos
+
 ## 🏗️ Estructura del Proyecto
