@@ -39,9 +39,9 @@ internal sealed class SearchVehiculosQueryHandler
                 a.id AS Id,
                 a.modelo AS Modelo,
                 a.vin AS VIN,
-                a.precio AS Precio,
+                a.precio_monto AS Precio,
                 a.precio_tipo_moneda AS TipoMoneda,
-                a.direccion-pais AS Pais,
+                a.direccion_pais AS Pais,
                 a.direccion_departamento AS Departamento,
                 a.direccion_provincia AS provincia,
                 a.direccion_ciudad AS ciudad,
@@ -52,9 +52,9 @@ internal sealed class SearchVehiculosQueryHandler
                 SELECT 1
                 FROM alquileres AS b
                 WHERE 
-                    b.vehiculo_id = a.id
+                    b.vehiculo_id = a.id AND
                     b.duracion_inicio <= @EndDate AND
-                    b.duracion_final >= @StartDate AND
+                    b.duracion_fin >= @StartDate AND
                     b.status = ANY(@ActiveAlquilerStatuses)
             )        
         """;

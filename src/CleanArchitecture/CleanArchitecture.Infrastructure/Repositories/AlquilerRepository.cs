@@ -31,8 +31,8 @@ internal sealed class AlquilerRepository : Repository<Alquiler>, IAlquilerReposi
         .AnyAsync(
             alquiler =>
                 alquiler.VehiculoId == vehiculo.Id &&
-                alquiler.Duracion.Inicio <= duracion.Fin &&
-                alquiler.Duracion.Fin >= duracion.Inicio &&
+                alquiler.Duracion!.Inicio <= duracion.Fin &&
+                alquiler.Duracion!.Fin >= duracion.Inicio &&
                 ActiveAlquilerStatuses.Contains(alquiler.Status),
                 cancellationToken
         );

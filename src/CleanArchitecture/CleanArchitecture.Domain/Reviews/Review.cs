@@ -29,8 +29,8 @@ public sealed class Review : Entity
     public Guid VehiculoId {get; private set;}
     public Guid AlquilerId {get; private set;} 
     public Guid UserId {get; private set;}
-    public Raiting Raiting {get; private set;}
-    public Comentario Comentario {get; private set;}
+    public Raiting? Raiting {get; private set;}
+    public Comentario? Comentario {get; private set;}
     public DateTime FechaCreacion {get; private set;}
 
     public static Result<Review> Create(
