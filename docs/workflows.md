@@ -5,26 +5,27 @@
 ### Flujo
 
 ```
-1. Cliente envía ReservarAlquilerCommand
+1. Cliente envía ReservarAlquilerCommand (POST /api/alquileres)
    - vehiculoId
    - userId
    - fechaInicio
    - fechaFin
 
 2. Validación (ReservarAlquilerCommandValidator)
-   - Fechas válidas
+   - Fechas válidas (inicio <= fin)
    - Vehiculo existe
    - Usuario existe
 
 3. Ejecución (ReservarAlquilerCommandHandler)
    - Consulta vehículo y usuario
-   - Verifica disponibilidad
+   - Verifica disponibilidad (IsOverLappingAsync)
    - Calcula precio con PrecioService
-   - Crea entidad Alquiler
+   - Crea entidad Alquiler (factory method Reservar)
    - Guarda en repositorio
 
 4. Evento de Dominio
    - AlquilerReservadoDomainEvent
+   - ReserverAlquilerDomainEventHandler envía email de confirmación
    - Actualiza FechaUltimaAlquiler del vehículo
 ```
 
@@ -46,10 +47,11 @@ public async Task<Result<Guid>> Handle(
 {
     // 1. Obtener vehiculo
     // 2. Obtener usuario
-    // 3. Calcular precio
-    // 4. Crear alquiler
-    // 5. Guardar
-    // 6. Retornar ID
+    // 3. Verificar solapamiento
+    // 4. Calcular precio
+    // 5. Crear alquiler (Alquiler.Reservar)
+    // 6. Guardar
+    // 7. Retornar ID
 }
 ```
 
@@ -107,7 +109,7 @@ public async Task<Result<Guid>> Handle(
 ### Flujo
 
 ```
-1. Cliente envía GetAlquilerQuery con ID
+1. Cliente envía GetAlquilerQuery (GET /api/alquileres/{id})
 2. Handler consulta repositorio
 3. Se mapea a AlquilerResponse
 4. Se retorna la información
@@ -125,4 +127,66 @@ public record AlquilerResponse(
     string Status,
     decimal PrecioTotal
 );
+```
+
+---
+
+## 6. Buscar Vehículos Disponibles
+
+### Flujo
+
+```
+1. Cliente envía SearchVehiculosQuery (GET /api/vehiculos?fechaInicio=...&fechaFin=...)
+2. Validación: fechaInicio <= fechaFin
+3. Handler ejecuta consulta SQL con Dapper
+   - SELECT vehículos
+   - WHERE NO EXISTE alquiler activo que se solape con el rango de fechas
+   - Estados activos: Reservado, Confirmado, Completado
+4. Se mapea resultado a VehiculoResponse con DireccionResponse
+5. Se retorna lista de vehículos disponibles
+```
+
+### Query
+
+```csharp
+public record SearchVehiculosQuery(
+    DateOnly fechaInicio,
+    DateOnly fechaFin
+) : IQuery<IReadOnlyList<VehiculoResponse>>;
+```
+
+### Responses
+
+```csharp
+public sealed class VehiculoResponse
+{
+    public Guid Id { get; init; }
+    public string? Modelo { get; init; }
+    public string? Vin { get; init; }
+    public decimal Precio { get; init; }
+    public string? TipoMoneda { get; set; }
+    public DireccionResponse? Direccion { get; set; }
+}
+
+public sealed class DireccionResponse
+{
+    public string? Pais { get; init; }
+    public string? Departamento { get; init; }
+    public string? Provincia { get; init; }
+    public string? Calle { get; init; }
+}
+```
+
+### Lógica de Disponibilidad
+
+Un vehículo está disponible si NO tiene ningún alquiler con estado Reservado, Confirmado o Completado que se solape con el rango de fechas consultado:
+
+```
+NOT EXISTS (
+    SELECT 1 FROM alquileres
+    WHERE vehiculo_id = vehiculo.id
+      AND duracion_inicio <= fechaFin
+      AND duracion_fin >= fechaInicio
+      AND status IN (Reservado, Confirmado, Completado)
+)
 ```
