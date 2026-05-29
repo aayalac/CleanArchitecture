@@ -26,3 +26,47 @@ Para información detallada, consulta la carpeta [`docs/`](./docs/):
 - [Flujos Principales](./docs/workflows.md) - Casos de uso y procesos
 
 ## 🏗️ Estructura del Proyecto
+
+```
+CleanArchitecture/
+├── CleanArchitecture.sln
+├── global.json                          → Pinned .NET SDK 8.0.419
+├── docs/                                → Documentación del proyecto
+│   ├── architecture.md
+│   ├── domain.md
+│   ├── workflows.md
+│   └── consumo-apis/                    → Colecciones Postman
+└── src/CleanArchitecture/
+    ├── CleanArchitecture.Domain/        → Entidades, value objects, eventos de dominio
+    ├── CleanArchitecture.Application/   → Casos de uso (CQRS), validación, abstracciones
+    ├── CleanArchitecture.Infrastructure/→ EF Core, repositorios, servicios externos
+    └── CleanArchitecture.Api/           → Controladores REST, middleware, Swagger
+```
+
+### Capas
+
+| Capa | Proyecto | Responsabilidad |
+|------|----------|-----------------|
+| **Domain** | `CleanArchitecture.Domain` | Lógica de negocio pura: entidades, value objects, eventos de dominio, interfaces de repositorio |
+| **Application** | `CleanArchitecture.Application` | Casos de uso con CQRS (MediatR), validación (FluentValidation), abstracciones de infraestructura |
+| **Infrastructure** | `CleanArchitecture.Infrastructure` | Persistencia (EF Core + PostgreSQL), repositorios concretos, servicios de email y reloj |
+| **Api** | `CleanArchitecture.Api` | ASP.NET Core Web API: controladores, middleware de excepciones, Swagger, datos semilla |
+
+### Tecnologías
+
+- **.NET 8** / C# con nullable references habilitado
+- **Entity Framework Core 7** con PostgreSQL (Npgsql)
+- **MediatR** para CQRS y publicación de eventos de dominio
+- **FluentValidation** para validación de comandos
+- **Dapper** para consultas de lectura
+- **Bogus** para generación de datos semilla
+- **Swashbuckle** para documentación Swagger/OpenAPI
+
+### Ejecutar el proyecto
+
+```bash
+cd src/CleanArchitecture/CleanArchitecture.Api
+dotnet run
+```
+
+La API se inicia en `http://localhost:9000` con Swagger habilitado en `/swagger`.
