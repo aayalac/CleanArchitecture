@@ -16,11 +16,11 @@ internal sealed class ReviewConfiguration : IEntityTypeConfiguration<Review>
         builder.HasKey(review => review.Raiting);
 
         builder.Property(review => review.Raiting)
-            .HasConversion(raiting => raiting.Value, value => Raiting.Create(value).Value);
+            .HasConversion(raiting => raiting!.Value, value => Raiting.Create(value).Value);
         
         builder.Property(review => review.Comentario)
             .HasMaxLength(200)
-            .HasConversion(comnetario => comnetario.Value, value => new Comentario(value));
+            .HasConversion(comnetario => comnetario!.Value, value => new Comentario(value));
 
         builder.HasOne<Vehiculo>()
             .WithMany()

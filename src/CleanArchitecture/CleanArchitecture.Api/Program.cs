@@ -24,6 +24,8 @@ app.ApplyMigration();
 
 app.SeedData();
 
+app.UseCustomExceptionHandler();
+
 app.MapControllers();
 
 app.Run();

@@ -39,7 +39,7 @@ public sealed class Alquiler : Entity
     public Moneda? Accesorios {get; private set;}
     public Moneda? PrecioTotal {get; private set;}
     public AlquilerStatus Status{get; private set;}
-    public DateRange Duracion {get; private set;}
+    public DateRange? Duracion {get; private set;}
     public DateTime? FechaCreacion {get; private set;}
     public DateTime? FechaConfirmacion {get; private set;}
     public DateTime? FechaDenegacion {get; private set;}
