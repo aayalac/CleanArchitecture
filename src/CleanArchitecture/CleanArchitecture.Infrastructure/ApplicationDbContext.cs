@@ -54,4 +54,10 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
             await _publisher.Publish(domainEvent);
         }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
 }
