@@ -1,0 +1,38 @@
+{
+  "info": {
+    "_postman_id": "41b66a1d-5faf-4f1b-812a-5b5c157685f2",
+    "name": "Vehiculos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53624183"
+  },
+  "item": [
+    {
+      "name": "Search Vehiculos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/vehiculos?startDate=01-01-2023&endDate=01-10-2023",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "vehiculos"
+          ],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "01-01-2023"
+            },
+            {
+              "key": "endDate",
+              "value": "01-10-2023"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
