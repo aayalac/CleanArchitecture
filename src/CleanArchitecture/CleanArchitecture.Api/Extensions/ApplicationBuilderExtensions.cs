@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using CleanArchitecture.Api.Middleware;
 using CleanArchitecture.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Api.Extensions;
@@ -24,5 +26,10 @@ public static class ApplicationBuilderExtensions
                 logger.LogError(ex, "Errror en la migración");
             }
         }
+    }
+
+    public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
 }
